@@ -1,5 +1,5 @@
 /*
-	@version: 1.0.6
+	@version: 1.0.7
 	@author: howeller
 	@desc: Animation & Timeline Utilities for AnimateCC 2017.5 & 2018 banners.
 	@dependencies: createjs_2015.11.26 & easeljs_0.8.2
@@ -7,8 +7,8 @@
 		* Set global var in DOM
 			var fun = null;
 
-		* Initialize & Set custom speed variable on Frame "0" in AnimateCC
-			fun = cjsFun.init(this);
+		* Initialize, Build click through button & Set custom speed variable on Frame "0" in AnimateCC
+			fun = cjsFun.init(this, myClickThroughFunction);
 			fun.sp = 0.6;
 
 		* Execute on any frame:
@@ -20,7 +20,7 @@
 */
 
 var cjsFun=(function(){
-	var version="1.0.6",
+	var version="1.0.7",
 			instance=null,
 			tl=null;
 
@@ -58,8 +58,25 @@ var cjsFun=(function(){
 				resetPool.push(mc);	
 			}
 		}
+		function makeClickThruBtn(_fxn){
+			var clickZone = new cjs.Shape();
+			//var clickZone = new cjs.MovieClip(); // Use Movieclip or Shape?
+			var hitArea = new cjs.Shape();
+			hitArea.graphics.beginFill("#000").drawRect(0,0,canvas.width,canvas.height); // Get width from canvas or lib.properties object?
+			clickZone.hitArea = hitArea;
+			clickZone.setBounds(0,0,canvas.width,canvas.height);
+			clickZone.x = clickZone.y = clickZone.regX = clickZone.regY = 0;
+			clickZone.name = "bgClick";
+			clickZone.cursor = "pointer";
+			clickZone.addEventListener("click", _fxn);
+			cjsFun.bgClick = clickZone;
+			stage.addChild(clickZone);
+			stage.setChildIndex( clickZone, 0);// Set to bottom of stack //stage.getNumChildren()-1 (on top)
+			console.log("makeClickThruBtn [?] "+clickZone.getBounds()+" "+clickZone);	
+		}
 		return{
-			/* Public Instance properties */
+			 // Public 
+			bgClick:null,
 			sp:0.3,
 			pauser:function(_delay){
 				var delay = _delay||0;
@@ -126,14 +143,17 @@ var cjsFun=(function(){
 		}
 	}
 	return{
-		init:function(_timeline){
+		init:function(_timeline, _clickThruFunc){
 			// Get the cjsFun instance if one exists or create one if it doesn't
 			if ( !instance ) {
 				tl = _timeline;
 				instance = createInstance();
-				console.log("Make cjsFun : version "+version);
+				if(!!_clickThruFunc && typeof _clickThruFunc === 'function'){
+					makeClickThruBtn(_clickThruFunc);
+				}
+				console.log("Making cjsFun : version "+version);
 			}
 			return instance;
 		}
 	}
-})();
+})();	
