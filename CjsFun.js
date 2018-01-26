@@ -1,6 +1,6 @@
 /*
-	@version: 2.0.0
-	@author: howeller
+	@version: 2.0.1
+	@author: howeller, eric.howell@ogilvy.com
 	@desc: Animation & Timeline Utilities for AnimateCC 2017.5 & 2018 banners.
 	@dependencies: createjs_2015.11.26 & easeljs_0.8.2
 	@usage:
@@ -8,19 +8,19 @@
 			var fun = null;
 
 		* Initialize & Set custom speed variable on Frame "0" in AnimateCC
-			fun = new cjsFun(this);
+			fun = new CjsFun(this);
 			fun.sp = 0.6;
 
 		* Execute on any frame:
-			fun.fadeIn( this.mc1 ); 								// Use default speed, no delay
-			fun.slideIn( this.mc2, fun.sp, 2);			// Use default speed, custom delay, default start point
-			fun.slideIn( this.mc3, 0.5, 1.5, 300); 	// Set all custom params
+			fun.fadeIn( this.mc1 );	// Use default speed, no delay
+			fun.slideIn( this.mc2, fun.sp, 2);	// Use default speed, custom delay, default start point
+			fun.slideIn( this.mc3, 0.5, 1.5, 300);	// Set all custom params
 			fun.pauser(3);
 			console.log(fun.getTotalRuntTime()); // Place on end frame to log estimated runtime
 
 		* To Extend:
-			cjsFun.prototype.slideDown=function(mc, _sp, _delay, _startY){
-				this.initMc(mc);
+			CjsFun.prototype.slideDown=function(mc, _sp, _delay, _startY){
+				this.initMc(mc); // Required
 				var startY = _startY||(0-mc.nominalBounds.height),
 						delay = _delay||0,
 						mySp = _sp||this.sp,
@@ -28,30 +28,30 @@
 				mc.y = startY;
 				createjs.Tween.get(mc, {override:true}).wait(delay*1000).to({y:mc.stageY}, mySp*1000, createjs.Ease.quadOut);
 			}
-			fun = new cjsFun(this);
+			fun = new CjsFun(this);
 			fun.slideDown(this.mc4, sp, 1.2, canvas.height);
 
 		* To Automatically build a clickthrough button sized to the stage:
-			fun = new cjsFun(this, myClickThoughFunction);
+			fun = new CjsFun(this, myClickThoughFunction);
 */
 
-function cjsFun(_timeline,_clickThruFunc){
+function CjsFun(_timeline,_clickThruFunc){
 
-	var version="2.0.0", // Major. Minor. Bugfix
+	var version="2.0.1", // Major. Minor. Bugfix
 			instance=null,	// The cached instance
 			tl=_timeline,
 			totalPauseTime=0,
 			resetPool =[];
 
 	// Rewrite the constructor
-	cjsFun = function() {
-		console.log("Making cjsFun : version "+version);
+	CjsFun = function() {
 		return instance;
 	}
 
-	cjsFun.prototype = this;			// Carry over the prototype
-	instance = new cjsFun();			// The Instance
-	instance.constructor = cjsFun;// Reset the constructor pointer
+		CjsFun.prototype = this;			// Carry over the prototype
+		instance = new CjsFun();			// The Instance
+		instance.constructor = CjsFun;// Reset the constructor pointer
+		console.log("Making CjsFun : version "+version);
 
 	// Create dynamic clickThrough button if clickthrough function is passed
 	if(!!_clickThruFunc && typeof _clickThruFunc === 'function'){
@@ -71,11 +71,10 @@ function cjsFun(_timeline,_clickThruFunc){
 		clickZone.name = "bgClick";
 		clickZone.cursor = "pointer";
 		clickZone.addEventListener("click", _fxn);
-		// cjsFun.bgClick = clickZone;
-		instance.bgClick = clickZone;
+		instance.bgClick = clickZone;// CjsFun.bgClick = clickZone;
 		stage.addChild(clickZone);
 		stage.setChildIndex(clickZone, 0);// Set to bottom of stack //stage.getNumChildren()-1 (on top)
-		console.log("makeClickThruBtn [?] "+clickZone.getBounds()+" "+clickZone+" ");	
+		// console.log("makeClickThruBtn [?] "+clickZone.getBounds()+" "+clickZone+" ");	
 	}
 	function goTime(){
 		tl.play();
@@ -92,7 +91,7 @@ function cjsFun(_timeline,_clickThruFunc){
 	// Public
 
 	instance.bgClick=null;
-	instance.sp=0.3;
+	instance.globalSpeed=0.3;
 	instance.ease = createjs.Ease.quadOut;
 
 	instance.pauser=function(_delay){
@@ -109,11 +108,14 @@ function cjsFun(_timeline,_clickThruFunc){
 		// console.log("TotalRuntTime is "+(runTime)+" seconds");
 		return runTime;
 	}
-	instance.initMc=function(mc){
+	instance.initMc=function(mc, _options){
 		// console.log("initMc "+mc);
 		if (!mc.init){
+			_options=_options||{};
 			mc.init = true;
-			setReg(mc);
+			if (!_options.useStageReg){
+				setReg(mc);
+			}
 			var bounds = mc.nominalBounds;
 			mc.width = bounds.width;
 			mc.height = bounds.height;
@@ -127,34 +129,25 @@ function cjsFun(_timeline,_clickThruFunc){
 			resetPool.push(mc);	
 		}
 	}
-	/*instance.slideIn=function(_mc, _sp, _delay, _startX){
+	instance.fadeIn=function(_mc, _delay, _options){
 		this.initMc(_mc);
-		var startX = _startX || (0-_mc.nominalBounds.width),
-				delay = _delay||0,
-				mySp = _sp||this.sp;
-		_mc.x = startX;
-		createjs.Tween.get(_mc, {override:true}).wait(delay*1000).to({x:_mc.stageX}, mySp*1000, createjs.Ease.quadOut);
-	}
-	instance.slideDown=function(_mc, _sp, _delay, _startY){
-		this.initMc(_mc);
-		var startY = _startY||(_mc.y-_mc.nominalBounds.height),
-				delay = _delay||0,
-				mySp = _sp||this.sp,
-				stageX = _mc.stageX;
-		_mc.y = startY;
-		createjs.Tween.get(_mc, {override:true}).wait(delay*1000).to({y:_mc.stageY}, mySp*1000, createjs.Ease.quadOut);
-	}*/
-	instance.fadeIn=function(_mc, _options={sp:this.sp, delay:0, ease:this.ease}){
-		this.initMc(_mc);
+		_options = _options || {};
+		var delay = _delay||0,
+				sp = _options.sp||0.3,
+				ease = _options.ease||this.ease;
 		_mc.alpha = 0;
-		createjs.Tween.get(_mc).wait(_options.delay*1000).to({alpha:1}, _options.sp*1000, _options.ease);
+		createjs.Tween.get(_mc).wait(delay*1000).to({alpha:1}, sp*1000, ease);
 	}
-	instance.fadeOut=function(_mc, _options={sp:this.sp, delay:0, ease:this.ease}){
+	instance.fadeOut=function(_mc, _delay, _options){
 		this.initMc(_mc);
-		createjs.Tween.get(_mc).wait(_options.delay*1000).to({alpha:0}, _options.sp*1000, _options.ease);
+		_options = _options || {};
+		var delay = _delay||0,
+				sp = _options.sp||0.3,
+				ease = _options.ease||this.ease;
+		createjs.Tween.get(_mc).wait(delay*1000).to({alpha:0}, sp*1000, ease);
 	}
 	instance.resetAllMc=function(){
-		console.log("resetAllMc ");
+		// console.log("resetAllMc ");
 		for (var i in resetPool){
 			var mc = resetPool[i];
 			if (!mc.reset){
