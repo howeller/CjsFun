@@ -1,6 +1,6 @@
 /*
 /*
-	@version: 1.0.1 // Major. Minor. Bugfix
+	@version: 1.0.2 // Major. Minor. Bugfix
 	@author: howeller, eric.howell@ogilvy.com
 	@desc: Animation Prototypes to extend CjsFun class.
 	@usage: 
@@ -8,7 +8,7 @@
 			
 			CjsFun.prototype.slideIn=function(_mc, _sp, _delay, _ease){
 				this.initMc(_mc);
-				_options = _options || {};
+				_options=_options||{};
 				var delay = _delay||0,
 						sp = _options.sp||0.3,
 						ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
@@ -31,7 +31,7 @@
 CjsFun.prototype.slideDown=function(_mc, _delay, _options){
 	console.log("slideDown! "+_mc);
 	this.initMc(_mc);
-	_options = _options || {};
+	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
 			ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
@@ -46,7 +46,7 @@ CjsFun.prototype.slideDown=function(_mc, _delay, _options){
 */
 CjsFun.prototype.slideIn=function(_mc, _delay, _options){
 	this.initMc(_mc);
-	_options = _options || {};
+	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
 			ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
@@ -60,7 +60,7 @@ CjsFun.prototype.slideIn=function(_mc, _delay, _options){
 */
 CjsFun.prototype.slideUp=function(_mc, _delay, _options){
 	this.initMc(_mc);
-	_options = _options || {};
+	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
 			ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
@@ -74,7 +74,7 @@ CjsFun.prototype.slideUp=function(_mc, _delay, _options){
 */
 CjsFun.prototype.slideOut=function(_mc, _delay, _options){
 	this.initMc(_mc);
-	_options = _options || {};
+	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
 			ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
@@ -87,14 +87,14 @@ CjsFun.prototype.slideOut=function(_mc, _delay, _options){
 	Tweens scale to from 0 to size on stage.
 */
 CjsFun.prototype.scaleIn=function(_mc, _delay, _options){
-	this.initMc(_mc);
-	_options = _options || {};
+	this.initMc(_mc,{useStageReg:true});
+	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
 			ease = _options.ease||this.ease;//createjs.Ease.quadOut;//
 	// console.log("scaleIn! "+_mc.scaleX+" stageScale:"+stageScale);
 	_mc.scaleX = _mc.scaleY = 0;
-	createjs.Tween.get(_mc,{override:false}).wait(_delay*1000).to({scaleX:_mc.stageScaleX,scaleY:_mc.stageScaleY}, _sp*1000, _ease);
+	createjs.Tween.get(_mc,{override:false}).wait(delay*1000).to({scaleX:_mc.stageScaleX,scaleY:_mc.stageScaleY}, sp*1000, ease);
 }
 
 /*
@@ -102,12 +102,12 @@ CjsFun.prototype.scaleIn=function(_mc, _delay, _options){
 */
 CjsFun.prototype.scaleOut=function(_mc, _delay, _options){
 	this.initMc(_mc);
-	_options = _options || {};
+	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
 			ease = _options.ease||this.ease;//createjs.Ease.quadOut;//
 	// console.log("scaleOut! "+_mc.scaleX+" stageScale:"+stageScale);
-	createjs.Tween.get(_mc,{override:false}).wait(_delay*1000).to({scaleX:0,scaleY:0}, _sp*1000, _ease);
+	createjs.Tween.get(_mc,{override:false}).wait(delay*1000).to({scaleX:0,scaleY:0}, sp*1000, ease);
 }
 
 /*
