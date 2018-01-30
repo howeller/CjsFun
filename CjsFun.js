@@ -125,7 +125,7 @@ function CjsFun(_timeline,_clickThruFunc){
 		this.initMc(_mc);
 		_options = _options || {};
 		var delay = _delay||0,
-				sp = _options.sp||0.3,
+				sp = _options.sp||this.globalSpeed,
 				ease = _options.ease||this.ease;
 		_mc.alpha = 0;
 		createjs.Tween.get(_mc).wait(delay*1000).to({alpha:1}, sp*1000, ease);
@@ -134,7 +134,7 @@ function CjsFun(_timeline,_clickThruFunc){
 		this.initMc(_mc);
 		_options = _options || {};
 		var delay = _delay||0,
-				sp = _options.sp||0.3,
+				sp = _options.sp||this.globalSpeed,
 				ease = _options.ease||this.ease;
 		createjs.Tween.get(_mc).wait(delay*1000).to({alpha:0}, sp*1000, ease);
 	}

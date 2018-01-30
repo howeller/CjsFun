@@ -4,16 +4,19 @@ Animation and Timeline Utility for AnimateCC/createJs generated banners.
 ## Dependencies
 createjs_2015.11.26
 
-## Native methods
+## Properties
+globalSpeed: 0.3
+	*	Set a global default speed for animation functions
+## Methods
 pauser(delay:0)
 	*	Pauses timeline for variable amout of time.
 
 getTotalRuntTime:Number
 	*	Returns total time pauser was used + main timeline time.
 
-initMc
-	*	Records stage position of Movieclip. 
-	*	Resets transformation point to 0,0.
+initMc ( Movieclip, { useStageReg:Boolean } )
+	*	Records stage position, scale, & opacity of Movieclip. 
+	*	Resets transformation point to 0,0 unless useStageReg arguement is passed.
 	*	Required when extending this module
 
 replay
@@ -24,10 +27,10 @@ resetAllMc
 	*	For timeline replay events. 
 	*	Resets all MovieClip positions and opacity to original positions. 
 
-fadeIn( MovieClip, {sp:Number, delay:Number, ease:createjsEaseFunction})
+fadeIn( MovieClip, delay:Number, { sp: globalSpeed, ease:createjsEaseFunction})
 	*	Fades in a movieclip from opacity 0
 
-fadeOut( MovieClip, {sp:Number, delay:Number, ease:createjsEaseFunction})
+fadeOut( MovieClip, delay:Number, { sp: globalSpeed, ease:createjsEaseFunction})
 	*	Fades out a movieclip to opacity 0
 
 ## How to use
@@ -43,7 +46,7 @@ fun.sp = 0.6;
 Execute on any frame:
 ```javascript
 fun.fadeIn( this.mc1 );	// Use default speed, no delay
-fun.slideIn( this.mc2, 1.1, {sp:fun.sp});	// Use default speed, custom delay, default start point
+fun.slideIn( this.mc2, 1.1, { sp:fun.globaSpeed });	// Use global speed, custom delay, default start point
 fun.slideIn( this.mc3, 2.2, { sp:0.35, startX:300 });	// Set all custom params
 fun.pauser(3.1); 
 console.log(fun.getTotalRuntTime()); // Place on end frame to log estimated runtime
