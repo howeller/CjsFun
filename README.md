@@ -65,7 +65,7 @@ function onReplayClick(e){
 	fun.resetAllMc();
 }
 ```
-##To Extend:
+## To Extend:
 ```javascript
 CjsFun.prototype.slideDown=function(_mc, _delay, _options){
 	this.initMc(mc); // Required
