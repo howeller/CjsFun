@@ -7,36 +7,36 @@ Animation and Timeline Utility for Animate Generated HTML Banners.
 -Shared Library for [Sizmek ads](https://secure-ds.serving-sys.com/BurstingcachedScripts/libraries/createjs/createjs-2015.11.26.min.js)
 
 ## Properties
-**globalSpeed**: 0.3<br/>
+**globalSpeed**: 0.3
 - Set a global default speed for animation functions.
 
-**ease**: createjs.Ease.quadOut<br/>
+**ease**: createjs.Ease.quadOut
 - Set a global default ease for animation functions.
 
 ## Methods
-**pauser**(delay:0)<br/>
+**pauser**(delay:0)
 - Pauses timeline for variable amout of time.
 
-**getTotalRuntTime**:Number<br/>
+**getTotalRuntTime**:Number
 - Returns total time pauser was used + main timeline time.
 
-**initMc** ( Movieclip, { useStageReg:Boolean } )<br/>
+**initMc** ( Movieclip, { useStageReg:Boolean } )
 - Records stage position, scale, & opacity of Movieclip. 
-- Resets transformation point to 0,0 unless useStageReg arguement is passed.<br/>
+- Resets transformation point to 0,0 unless useStageReg arguement is passed.
 - Required when extending this module
 
-**replay**<br/>
-- Built in replay event callback.<br/>
+**replay**
+- Built in replay event callback.
 - Tells main timeline to gotoAndPlay(0) and calls resetAllMc()
 
-**resetAllMc**<br/>
-- For timeline replay events. <br/>
+**resetAllMc**
+- For timeline replay events.
 - Resets all MovieClip positions and opacity to original positions. 
 
-**fadeIn**( MovieClip, delay:Number, { sp: globalSpeed, ease: createjsEaseFunction })<br/>
+**fadeIn**( MovieClip, delay:Number, { sp: globalSpeed, ease: createjsEaseFunction })
 - Fades in a movieclip from opacity 0
 
-**fadeOut**( MovieClip, delay:Number, { sp: globalSpeed, ease: createjsEaseFunction })<br/>
+**fadeOut**( MovieClip, delay:Number, { sp: globalSpeed, ease: createjsEaseFunction })
 - Fades out a movieclip to opacity 0
 
 ## How to use
