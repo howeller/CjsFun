@@ -5,32 +5,32 @@ Animation and Timeline Utility for AnimateCC/createJs generated banners.
 createjs_2015.11.26
 
 ## Properties
-globalSpeed: 0.3
+globalSpeed: 0.3<br />
 	*	Set a global default speed for animation functions
 ## Methods
-pauser(delay:0)
+pauser(delay:0)<br />
 	*	Pauses timeline for variable amout of time.
 
-getTotalRuntTime:Number
+getTotalRuntTime:Number<br />
 	*	Returns total time pauser was used + main timeline time.
 
-initMc ( Movieclip, { useStageReg:Boolean } )
+initMc ( Movieclip, { useStageReg:Boolean } )<br />
 	*	Records stage position, scale, & opacity of Movieclip. 
-	*	Resets transformation point to 0,0 unless useStageReg arguement is passed.
+	*	Resets transformation point to 0,0 unless useStageReg arguement is passed.<br />
 	*	Required when extending this module
 
-replay
+replay<br />
 	*	Built in replay event callback.
 	*	Tells main timeline to gotoAndPlay(0) and calls resetAllMc()
 
-resetAllMc
+resetAllMc<br />
 	*	For timeline replay events. 
 	*	Resets all MovieClip positions and opacity to original positions. 
 
-fadeIn( MovieClip, delay:Number, { sp: globalSpeed, ease:createjsEaseFunction})
+fadeIn( MovieClip, delay:Number, { sp: globalSpeed, ease:createjsEaseFunction})<br />
 	*	Fades in a movieclip from opacity 0
 
-fadeOut( MovieClip, delay:Number, { sp: globalSpeed, ease:createjsEaseFunction})
+fadeOut( MovieClip, delay:Number, { sp: globalSpeed, ease:createjsEaseFunction})<br />
 	*	Fades out a movieclip to opacity 0
 
 ## How to use
