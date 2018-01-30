@@ -1,6 +1,6 @@
 /*
 /*
-	@version: 1.0.2 // Major. Minor. Bugfix
+	@version: 1.1.2 // Major. Minor. Bugfix
 	@author: howeller, eric.howell@ogilvy.com
 	@desc: Animation Prototypes to extend CjsFun class.
 	@usage: 
@@ -11,10 +11,10 @@
 				_options=_options||{};
 				var delay = _delay||0,
 						sp = _options.sp||0.3,
-						ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
+						ease = _options.ease||this.globalEase,//createjs.Ease.quadOut;//
 						startX = _options.startX||(0-_mc.nominalBounds.width);
 				_mc.x = startX;
-				createjs.Tween.get(_mc, {override:false}).wait(delay*1000).to({x:_mc.stageX}, sp*1000, myEase);
+				createjs.Tween.get(_mc, {override:true}).wait(delay*1000).to({x:_mc.stageX}, sp*1000, myEase);
 			}
 		
 		* Instantiate CjsFun on Frame 0	
@@ -34,10 +34,10 @@ CjsFun.prototype.slideDown=function(_mc, _delay, _options){
 	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
-			ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
+			ease = _options.ease||this.globalEase,//createjs.Ease.quadOut;//
 			startY = _options.startY||(_mc.y-_mc.nominalBounds.height);
 	_mc.y = startY;
-	createjs.Tween.get(_mc, {override:false}).wait(delay*1000).to({y:_mc.stageY}, sp*1000, ease);
+	createjs.Tween.get(_mc, {override:true}).wait(delay*1000).to({y:_mc.stageY}, sp*1000, ease);
 }
 
 
@@ -49,10 +49,10 @@ CjsFun.prototype.slideIn=function(_mc, _delay, _options){
 	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
-			ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
+			ease = _options.ease||this.globalEase,//createjs.Ease.quadOut;//
 			startX = _options.startX||(0-_mc.nominalBounds.width);
 	_mc.x = startX;
-	createjs.Tween.get(_mc, {override:false}).wait(delay*1000).to({x:_mc.stageX}, sp*1000, myEase);
+	createjs.Tween.get(_mc, {override:true}).wait(delay*1000).to({x:_mc.stageX}, sp*1000, myEase);
 }
 
 /*
@@ -63,10 +63,10 @@ CjsFun.prototype.slideUp=function(_mc, _delay, _options){
 	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
-			ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
+			ease = _options.ease||this.globalEase,//createjs.Ease.quadOut;//
 			startY = _options.startY||(canvas.height);
 	_mc.y = startY;
-	createjs.Tween.get(_mc, {override:false}).wait(delay*1000).to({y:_mc.stageY}, sp*1000, ease);
+	createjs.Tween.get(_mc, {override:true}).wait(delay*1000).to({y:_mc.stageY}, sp*1000, ease);
 }
 
 /*
@@ -77,10 +77,10 @@ CjsFun.prototype.slideOut=function(_mc, _delay, _options){
 	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
-			ease = _options.ease||this.ease,//createjs.Ease.quadOut;//
+			ease = _options.ease||this.globalEase,//createjs.Ease.quadOut;//
 			endX = _options.endX||(0-_mc.nominalBounds.width);
 	// console.log("< slideOut _sp"+_sp+" endX:"+endX);
-	createjs.Tween.get(_mc, {override:false}).wait(delay).to({x:endX}, sp, myEase);
+	createjs.Tween.get(_mc, {override:true}).wait(delay).to({x:endX}, sp, myEase);
 }
 
 /*
@@ -91,10 +91,10 @@ CjsFun.prototype.scaleIn=function(_mc, _delay, _options){
 	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
-			ease = _options.ease||this.ease;//createjs.Ease.quadOut;//
+			ease = _options.ease||this.globalEase;//createjs.Ease.quadOut;//
 	// console.log("scaleIn! "+_mc.scaleX+" stageScale:"+stageScale);
 	_mc.scaleX = _mc.scaleY = 0;
-	createjs.Tween.get(_mc,{override:false}).wait(delay*1000).to({scaleX:_mc.stageScaleX,scaleY:_mc.stageScaleY}, sp*1000, ease);
+	createjs.Tween.get(_mc,{override:true}).wait(delay*1000).to({scaleX:_mc.stageScaleX,scaleY:_mc.stageScaleY}, sp*1000, ease);
 }
 
 /*
@@ -105,9 +105,9 @@ CjsFun.prototype.scaleOut=function(_mc, _delay, _options){
 	_options=_options||{};
 	var delay = _delay||0,
 			sp = _options.sp||0.3,
-			ease = _options.ease||this.ease;//createjs.Ease.quadOut;//
+			ease = _options.ease||this.globalEase;//createjs.Ease.quadOut;//
 	// console.log("scaleOut! "+_mc.scaleX+" stageScale:"+stageScale);
-	createjs.Tween.get(_mc,{override:false}).wait(delay*1000).to({scaleX:0,scaleY:0}, sp*1000, ease);
+	createjs.Tween.get(_mc,{override:true}).wait(delay*1000).to({scaleX:0,scaleY:0}, sp*1000, ease);
 }
 
 /*

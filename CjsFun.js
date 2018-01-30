@@ -12,11 +12,16 @@
 			fun.sp = 0.6;
 
 		* Execute on any frame:
-			fun.fadeIn( this.mc1 );	// Use default speed, no delay
-			fun.slideIn( this.mc2, fun.sp, 2);	// Use default speed, custom delay, default start point
-			fun.slideIn( this.mc3, 0.5, 1.5, 300);	// Set all custom params
+			// Use only defaults, no delay.
+			fun.fadeIn( this.mc1 );	
+			// Set custom delay. Use default speed, ease.  
+			fun.fadeIn( this.mc2, 1.1);	
+			// Set all custom params
+			fun.fadeIn( this.mc3, 1.5, { sp: 0.5, ease: createjs.Ease.cubicInOut });
+			// Pause Timeline for 3 seconds
 			fun.pauser(3);
-			console.log(fun.getTotalRuntTime()); // Place on end frame to log estimated runtime
+			// Place on last frame to log estimated runtime
+			console.log(fun.getTotalRuntTime());
 
 		* To Extend:
 			CjsFun.prototype.slideDown=function(_mc, _delay, _options){
@@ -89,7 +94,7 @@ function CjsFun(_timeline,_clickThruFunc){
 
 	instance.bgClick=null;
 	instance.globalSpeed=0.3;
-	instance.ease = createjs.Ease.quadOut;
+	instance.globalEase = createjs.Ease.quadOut;
 
 	instance.pauser=function(_delay){
 		var delay = _delay||0;
@@ -123,20 +128,20 @@ function CjsFun(_timeline,_clickThruFunc){
 	}
 	instance.fadeIn=function(_mc, _delay, _options){
 		this.initMc(_mc);
-		_options = _options || {};
+		_options = _options||{};
 		var delay = _delay||0,
 				sp = _options.sp||this.globalSpeed,
-				ease = _options.ease||this.ease;
+				ease = _options.ease||this.globalEase;
 		_mc.alpha = 0;
-		createjs.Tween.get(_mc).wait(delay*1000).to({alpha:1}, sp*1000, ease);
+		createjs.Tween.get(_mc,{override:true}).wait(delay*1000).to({alpha:1}, sp*1000, ease);
 	}
 	instance.fadeOut=function(_mc, _delay, _options){
 		this.initMc(_mc);
-		_options = _options || {};
+		_options = _options||{};
 		var delay = _delay||0,
 				sp = _options.sp||this.globalSpeed,
-				ease = _options.ease||this.ease;
-		createjs.Tween.get(_mc).wait(delay*1000).to({alpha:0}, sp*1000, ease);
+				ease = _options.ease||this.globalEase;
+		createjs.Tween.get(_mc,{override:true}).wait(delay*1000).to({alpha:0}, sp*1000, ease);
 	}
 	instance.resetAllMc=function(){
 		console.log("resetAllMc ");
