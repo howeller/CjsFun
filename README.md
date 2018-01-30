@@ -1,37 +1,43 @@
 # CjsFun
-Animation and Timeline Utility for AnimateCC/createJs generated banners. 
+Animation and Timeline Utility for Animate Generated HTML Banners.
 
 ## Dependencies
-createjs_2015.11.26
+[createjs_2015.11.26](https://github.com/CreateJS/Combined)
+-Shared Library for [DCM ads](https://s0.2mdn.net/ads/studio/cached_libs/createjs_2015.11.26_54e1c3722102182bb133912ad4442e19_min.js)
+-Shared Library for [Sizmek ads](https://secure-ds.serving-sys.com/BurstingcachedScripts/libraries/createjs/createjs-2015.11.26.min.js)
 
 ## Properties
-globalSpeed: 0.3<br />
-	*	Set a global default speed for animation functions
+**globalSpeed**: 0.3<br/>
+- Set a global default speed for animation functions.
+
+**ease**: createjs.Ease.quadOut<br/>
+- Set a global default ease for animation functions.
+
 ## Methods
-pauser(delay:0)<br />
-	*	Pauses timeline for variable amout of time.
+**pauser**(delay:0)<br/>
+- Pauses timeline for variable amout of time.
 
-getTotalRuntTime:Number<br />
-	*	Returns total time pauser was used + main timeline time.
+**getTotalRuntTime**:Number<br/>
+- Returns total time pauser was used + main timeline time.
 
-initMc ( Movieclip, { useStageReg:Boolean } )<br />
-	*	Records stage position, scale, & opacity of Movieclip. 
-	*	Resets transformation point to 0,0 unless useStageReg arguement is passed.<br />
-	*	Required when extending this module
+**initMc** ( Movieclip, { useStageReg:Boolean } )<br/>
+- Records stage position, scale, & opacity of Movieclip. 
+- Resets transformation point to 0,0 unless useStageReg arguement is passed.<br/>
+- Required when extending this module
 
-replay<br />
-	*	Built in replay event callback.
-	*	Tells main timeline to gotoAndPlay(0) and calls resetAllMc()
+**replay**<br/>
+- Built in replay event callback.<br/>
+- Tells main timeline to gotoAndPlay(0) and calls resetAllMc()
 
-resetAllMc<br />
-	*	For timeline replay events. 
-	*	Resets all MovieClip positions and opacity to original positions. 
+**resetAllMc**<br/>
+- For timeline replay events. <br/>
+- Resets all MovieClip positions and opacity to original positions. 
 
-fadeIn( MovieClip, delay:Number, { sp: globalSpeed, ease:createjsEaseFunction})<br />
-	*	Fades in a movieclip from opacity 0
+**fadeIn**( MovieClip, delay:Number, { sp: globalSpeed, ease: createjsEaseFunction })<br/>
+- Fades in a movieclip from opacity 0
 
-fadeOut( MovieClip, delay:Number, { sp: globalSpeed, ease:createjsEaseFunction})<br />
-	*	Fades out a movieclip to opacity 0
+**fadeOut**( MovieClip, delay:Number, { sp: globalSpeed, ease: createjsEaseFunction })<br/>
+- Fades out a movieclip to opacity 0
 
 ## How to use
 Set global var in DOM or on stage

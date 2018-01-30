@@ -65,14 +65,14 @@ function CjsFun(_timeline,_clickThruFunc){
 		var cjs = cjs||createjs;
 		var clickZone = new cjs.Shape();
 		var hitArea = new cjs.Shape();
-		hitArea.graphics.beginFill("#000").drawRect(0,0,canvas.width,canvas.height); // Get width from canvas or lib.properties object?
+		hitArea.graphics.beginFill("#000").drawRect(0,0,canvas.width,canvas.height);
 		clickZone.hitArea = hitArea;
 		clickZone.setBounds(0,0,canvas.width,canvas.height);
 		clickZone.x = clickZone.y = clickZone.regX = clickZone.regY = 0;
 		clickZone.name = "bgClick";
 		clickZone.cursor = "pointer";
 		clickZone.addEventListener("click", _fxn);
-		instance.bgClick = clickZone;// CjsFun.bgClick = clickZone;
+		instance.bgClick = clickZone;
 		stage.addChild(clickZone);
 		stage.setChildIndex(clickZone, 0);// Set to bottom of stack //stage.getNumChildren()-1 (on top)
 	}
