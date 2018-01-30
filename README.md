@@ -16,6 +16,10 @@ initMc
 	*	Resets transformation point to 0,0.
 	*	Required when extending this module
 
+replay
+	*	Built in replay event callback.
+	*	Tells main timeline to gotoAndPlay(0) and calls resetAllMc()
+
 resetAllMc
 	*	For timeline replay events. 
 	*	Resets all MovieClip positions and opacity to original positions. 
@@ -25,6 +29,7 @@ fadeIn( MovieClip, {sp:Number, delay:Number, ease:createjsEaseFunction})
 
 fadeOut( MovieClip, {sp:Number, delay:Number, ease:createjsEaseFunction})
 	*	Fades out a movieclip to opacity 0
+
 ## How to use
 Set global var in DOM or on stage
 ```javascript
@@ -37,27 +42,41 @@ fun.sp = 0.6;
 ```
 Execute on any frame:
 ```javascript
-fun.fadeIn( this.mc1 ); 								// Use default speed, no delay
-fun.slideIn( this.mc2, fun.sp, 2);			// Use default speed, custom delay, default start point
-fun.slideIn( this.mc3, 0.5, 1.5, 300); 	// Set all custom params
-fun.pauser(3.1);
+fun.fadeIn( this.mc1 );	// Use default speed, no delay
+fun.slideIn( this.mc2, 1.1, {sp:fun.sp});	// Use default speed, custom delay, default start point
+fun.slideIn( this.mc3, 2.2, { sp:0.35, startX:300 });	// Set all custom params
+fun.pauser(3.1); 
 console.log(fun.getTotalRuntTime()); // Place on end frame to log estimated runtime
-```
-
-##To Extend:
-```javascript
-CjsFun.prototype.slideDown=function(mc, _sp, _delay, _startY){
-	this.initMc(mc); // Required
-	var startY = _startY||(0-mc.nominalBounds.height),
-			delay = _delay||0,
-			mySp = _sp||this.sp,
-	mc.y = startY;
-	createjs.Tween.get(mc).wait(delay*1000).to({y:mc.stageY}, mySp*1000, createjs.Ease.quadOut);
-}
-fun = new CjsFun(this);
-fun.slideDown(this.mc4, fun.sp, 1.2, canvas.height);
 ```
 To Automatically build a clickthrough button sized to the stage:
 ```javascript
 fun = new CjsFun(this, myClickThoughFunction);
+```
+To replay animation and reset all programatic tweens:
+```javascript
+this.my_replay_button.addEventlistener( "click", fun.replay, false);
+```
+To only reset all programatic tweens in custome replay event handler:
+```javascript
+this.my_replay_button.addEventlistener( "click", onReplayClick, false);
+
+function onReplayClick(e){
+	// Custom code
+	fun.resetAllMc();
+}
+```
+##To Extend:
+```javascript
+CjsFun.prototype.slideDown=function(_mc, _delay, _options){
+	this.initMc(mc); // Required
+	_options=_options||{};
+	var delay = _delay||0,
+			sp = _options.sp||0.3,
+			ease = _options.ease||createjs.Ease.quadOut;
+			startY = _options.startY||(_mc.y-_mc.nominalBounds.height);
+	mc.y = startY;
+	createjs.Tween.get(mc, {override:true}).wait(delay*1000).to({y:mc.stageY}, sp*1000, ease);
+}
+Framescript:
+fun.slideDown(this.mc4, 1.2, { sp: 0.5, startY: 600 });
 ```

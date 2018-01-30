@@ -1,6 +1,6 @@
 /*
-	@version: 2.0.1
-	@author: howeller, eric.howell@ogilvy.com
+	@version: 2.1.1
+	@author: howeller, eric@howellstudio.com
 	@desc: Animation & Timeline Utilities for AnimateCC 2017.5 & 2018 banners.
 	@dependencies: createjs_2015.11.26 & easeljs_0.8.2
 	@usage:
@@ -19,17 +19,18 @@
 			console.log(fun.getTotalRuntTime()); // Place on end frame to log estimated runtime
 
 		* To Extend:
-			CjsFun.prototype.slideDown=function(mc, _sp, _delay, _startY){
+			CjsFun.prototype.slideDown=function(_mc, _delay, _options){
 				this.initMc(mc); // Required
-				var startY = _startY||(0-mc.nominalBounds.height),
-						delay = _delay||0,
-						mySp = _sp||this.sp,
-				console.log("slideDown "+this.sp);
+				_options=_options||{};
+				var delay = _delay||0,
+						sp = _options.sp||0.3,
+						ease = _options.ease||createjs.Ease.quadOut;
+						startY = _options.startY||(_mc.y-_mc.nominalBounds.height);
 				mc.y = startY;
-				createjs.Tween.get(mc, {override:true}).wait(delay*1000).to({y:mc.stageY}, mySp*1000, createjs.Ease.quadOut);
+				createjs.Tween.get(mc, {override:true}).wait(delay*1000).to({y:mc.stageY}, sp*1000, ease);
 			}
-			fun = new CjsFun(this);
-			fun.slideDown(this.mc4, sp, 1.2, canvas.height);
+			Framescript:
+			fun.slideDown(this.mc4, 1.2, { sp: 0.5, startY: 600 });
 
 		* To Automatically build a clickthrough button sized to the stage:
 			fun = new CjsFun(this, myClickThoughFunction);
@@ -37,7 +38,7 @@
 
 function CjsFun(_timeline,_clickThruFunc){
 
-	var version="2.0.1", // Major. Minor. Bugfix
+	var version="2.1.1", // Major. Minor. Bugfix
 			instance=null,	// The cached instance
 			tl=_timeline,
 			totalPauseTime=0,
@@ -48,10 +49,10 @@ function CjsFun(_timeline,_clickThruFunc){
 		return instance;
 	}
 
-		CjsFun.prototype = this;			// Carry over the prototype
-		instance = new CjsFun();			// The Instance
-		instance.constructor = CjsFun;// Reset the constructor pointer
-		console.log("Making CjsFun : version "+version);
+	CjsFun.prototype = this;			// Carry over the prototype
+	instance = new CjsFun();			// The Instance
+	instance.constructor = CjsFun;// Reset the constructor pointer
+	console.log("Making CjsFun : version "+version);
 
 	// Create dynamic clickThrough button if clickthrough function is passed
 	if(!!_clickThruFunc && typeof _clickThruFunc === 'function'){
@@ -74,10 +75,6 @@ function CjsFun(_timeline,_clickThruFunc){
 		instance.bgClick = clickZone;// CjsFun.bgClick = clickZone;
 		stage.addChild(clickZone);
 		stage.setChildIndex(clickZone, 0);// Set to bottom of stack //stage.getNumChildren()-1 (on top)
-		// console.log("makeClickThruBtn [?] "+clickZone.getBounds()+" "+clickZone+" ");	
-	}
-	function goTime(){
-		tl.play();
 	}
 	function setReg(mc){
 		var stageRegX = mc.regX;
@@ -99,23 +96,18 @@ function CjsFun(_timeline,_clickThruFunc){
 		tl.stop();
 		totalPauseTime=totalPauseTime||0;
 		totalPauseTime+=_delay;
-		createjs.Tween.get(tl,{override:true}).wait(delay*1000).call(goTime);
-		// console.log("pauser! on frame: "+tl.currentFrame+" for "+_delay+" seconds : totalPauseTime "+totalPauseTime);
+		createjs.Tween.get(tl,{override:true}).wait(delay*1000).call(function(){tl.play()});
 	}
 	instance.getTotalRuntTime=function(){
 		var fps = createjs.Ticker.getFPS();// Updated for AnimateCC2017.5
 		var runTime = (tl.totalFrames/fps)+totalPauseTime;
-		// console.log("TotalRuntTime is "+(runTime)+" seconds");
 		return runTime;
 	}
 	instance.initMc=function(mc, _options){
-		// console.log("initMc "+mc);
 		if (!mc.init){
 			_options=_options||{};
 			mc.init = true;
-			if (!_options.useStageReg){
-				setReg(mc);
-			}
+			if (!_options.useStageReg){setReg(mc)}
 			var bounds = mc.nominalBounds;
 			mc.width = bounds.width;
 			mc.height = bounds.height;
@@ -147,7 +139,7 @@ function CjsFun(_timeline,_clickThruFunc){
 		createjs.Tween.get(_mc).wait(delay*1000).to({alpha:0}, sp*1000, ease);
 	}
 	instance.resetAllMc=function(){
-		// console.log("resetAllMc ");
+		console.log("resetAllMc ");
 		for (var i in resetPool){
 			var mc = resetPool[i];
 			if (!mc.reset){
@@ -163,6 +155,10 @@ function CjsFun(_timeline,_clickThruFunc){
 		}
 		resetPool=[];
 		totalPauseTime=0;
+	}
+	instance.replay=function(){
+		instance.resetAllMc();
+		tl.gotoAndPlay(0);
 	}
 	return instance;
 }
