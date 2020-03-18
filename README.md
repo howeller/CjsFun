@@ -1,26 +1,26 @@
 # CjsFun
 Animation and Timeline Utility for Animate Generated HTML Banners.
 
-## Dependencies
-[createjs_2015.11.26](https://github.com/CreateJS/Combined)
-- Shared Library for [DCM ads](https://s0.2mdn.net/ads/studio/cached_libs/createjs_2015.11.26_54e1c3722102182bb133912ad4442e19_min.js)
-- Shared Library for [Sizmek ads](https://secure-ds.serving-sys.com/BurstingcachedScripts/libraries/createjs/createjs-2015.11.26.min.js)
+## Parameters
+CjsFun( `this:timeline`, `myClickThoughFunction:function` )
+- `this` the stage timeline
+- `myClickThoughFunction` accepts optional function to generate a dynamic button and apply your function as a click event. 
 
 ## Properties
-**globalSpeed**: 0.3
+**globalSpeed**: `0.3`
 - Set a global default speed for animation functions.
 
 **globalEase**: createjs.Ease.quadOut
 - Set a global default ease for animation functions.
 
 ## Methods
-**pauser**( Number:0 )
+**pauser**( `Number:0` )
 - Pauses timeline for variable amout of time.
 
 **getTotalRuntTime**
 - Returns total time pauser was used + main timeline time.
 
-**initMc** ( Movieclip, { useStageReg:false } )
+**initMc** ( `Movieclip, { useStageReg:false }` )
 - Records stage position, scale, & alpha of Movieclip. 
 - Resets transformation point to 0,0 unless useStageReg arguement is passed.
 - Required when extending this module
@@ -33,10 +33,10 @@ Animation and Timeline Utility for Animate Generated HTML Banners.
 - For timeline replay events.
 - Resets all MovieClip positions and alpha to original positions. 
 
-**fadeIn**( MovieClip, delay: 0, { sp: globalSpeed, ease: globalEase })
+**fadeIn**( `MovieClip, delay: 0, { sp: globalSpeed, ease: globalEase }`)
 - Fades in a movieclip from alpha 0
 
-**fadeOut**( MovieClip, delay: 0, { sp: globalSpeed, ease: globalEase })
+**fadeOut**( `MovieClip, delay: 0, { sp: globalSpeed, ease: globalEase }`)
 - Fades out a movieclip to alpha 0
 
 ## How to use
@@ -97,3 +97,8 @@ Then on framescript:
 ```javascript
 fun.slideDown( this.mc4, 1.2, { sp: 0.5, startY: 600 });
 ```
+
+## Dependencies
+[createjs_2015.11.26](https://github.com/CreateJS/Combined)
+- Shared Library for [DCM ads](https://s0.2mdn.net/ads/studio/cached_libs/createjs_2015.11.26_54e1c3722102182bb133912ad4442e19_min.js)
+- Shared Library for [Sizmek ads](https://secure-ds.serving-sys.com/BurstingcachedScripts/libraries/createjs/createjs-2015.11.26.min.js)
