@@ -1,7 +1,7 @@
 # CjsFun
 Animation and Timeline Utility for Animate Generated HTML Banners.
 
-## Parameters
+## Constructor
 CjsFun( `this:timeline`, `myClickThoughFunction:function` )
 - `this` the stage timeline
 - `myClickThoughFunction` accepts optional function to generate a dynamic button and apply your function as a click event. 
@@ -10,7 +10,7 @@ CjsFun( `this:timeline`, `myClickThoughFunction:function` )
 **globalSpeed**: `0.3`
 - Set a global default speed for animation functions.
 
-**globalEase**: createjs.Ease.quadOut
+**globalEase**: `createjs.Ease.quadOut`
 - Set a global default ease for animation functions.
 
 ## Methods
