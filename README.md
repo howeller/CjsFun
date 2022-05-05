@@ -1,5 +1,5 @@
 # CjsFun
-Animation and Timeline Utility for Animate Generated HTML Banners.
+Singelton Timeline Utility for Adobe Animate HTML Banners.
 
 ## Constructor
 CjsFun( `this:timeline`, `myClickThoughFunction:function` )
