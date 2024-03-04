@@ -1,5 +1,5 @@
 /*
-	@version: 2.1.1
+	@version: 2.2.0
 	@author: howeller, eric@howellstudio.com
 	@desc: Animation & Timeline Utilities for AnimateCC 2017.5 & 2018 banners.
 	@dependencies: createjs_2015.11.26 & easeljs_0.8.2
@@ -43,7 +43,7 @@
 
 function CjsFun(_timeline,_clickThruFunc){
 
-	var version="2.1.1", // Major. Minor. Bugfix
+	var version="2.2.0", // Major. Minor. Bugfix
 			instance=null,	// The cached instance
 			tl=_timeline,
 			totalPauseTime=0,
@@ -92,7 +92,6 @@ function CjsFun(_timeline,_clickThruFunc){
 
 	// Public
 
-	instance.bgClick=null;
 	instance.globalSpeed=0.3;
 	instance.globalEase = createjs.Ease.quadOut;
 
