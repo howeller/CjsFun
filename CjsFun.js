@@ -103,7 +103,7 @@ function CjsFun(_timeline,_clickThruFunc){
 		createjs.Tween.get(tl,{override:true}).wait(delay*1000).call(function(){tl.play()});
 	}
 	instance.getTotalRuntTime=function(){
-		var fps = createjs.Ticker.getFPS();// Updated for AnimateCC2017.5
+		var fps = createjs.Ticker.framerate;// Updated for AnimateCC2024
 		var runTime = (tl.totalFrames/fps)+totalPauseTime;
 		return runTime;
 	}
